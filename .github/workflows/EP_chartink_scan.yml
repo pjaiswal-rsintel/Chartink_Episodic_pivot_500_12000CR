@@ -1,0 +1,36 @@
+name: Daily Chartink Scan
+
+on:
+  schedule:
+    # Runs at 10:30 UTC (4:00 PM IST) every Monday through Friday
+    - cron: '30 10 * * 1-5'
+  workflow_dispatch: # Allows you to run it manually by clicking a button
+
+jobs:
+  run-screener:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Needed to commit the CSV file back to your repo
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Chartink Script
+        run: python main.py
+
+      - name: Commit and push CSV
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add output/*.csv
+          git commit -m "Add daily scan result" || echo "No changes to commit"
+          git push
