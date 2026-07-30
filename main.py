@@ -5,7 +5,7 @@ from datetime import datetime
 import os
 
 # Replace this with the scan_clause you copied in Step 1
-scan_clause	"( {cash} ( daily close > 1 day ago max( 20 , daily high ) and daily volume > daily sma( daily volume , 20 ) * 1.5 and 1 day ago max( 30 , daily open / 2 days ago close ) > 1.03 and daily close > daily sma( daily close , 200 ) and daily close > 20 and market cap > 500 and market cap < 12000 ) )"
+scan_clause	= "( {cash} ( daily close > 1 day ago max( 20 , daily high ) and daily volume > daily sma( daily volume , 20 ) * 1.5 and 1 day ago max( 30 , daily open / 2 days ago close ) > 1.03 and daily close > daily sma( daily close , 200 ) and daily close > 20 and market cap > 500 and market cap < 12000 ) )"
 
 def get_chartink_data(scan_clause):
     url = "https://chartink.com/screener/process"
